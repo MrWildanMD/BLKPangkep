@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/first_fragment">
+
+    <fragment
+        android:id="@+id/first_fragment"
+        android:name="com.blk.blkpangkep.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/second_fragment" />
+        <action
+            android:id="@+id/action_first_fragment_to_fourth_fragment"
+            app:destination="@id/fourth_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/second_fragment"
+        android:name="com.blk.blkpangkep.FragmentProfil"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profil" >
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment"
+            app:destination="@id/third_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/third_fragment"
+        android:name="com.blk.blkpangkep.FragmentGaleri"
+        android:label="Galeri"
+        tools:layout="@layout/fragment_galeri" >
+        <action
+            android:id="@+id/action_thirdFragment_to_fourthFragment"
+            app:destination="@id/fourth_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fourth_fragment"
+        android:name="com.blk.blkpangkep.FragmentPeserta"
+        android:label="Peserta"
+        tools:layout="@layout/fragment_peserta">
+        <action
+            android:id="@+id/action_fourthFragment_to_fifthFragment"
+            app:destination="@id/fifth_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fifth_fragment"
+        android:name="com.blk.blkpangkep.FragmentLoker"
+        android:label="Loker"
+        tools:layout="@layout/fragment_loker"/>
+
+</navigation>

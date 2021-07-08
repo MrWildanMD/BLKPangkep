@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- home -->
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".DashboardFragment"
+    >
+
+<LinearLayout
+    android:id="@+id/home"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:scrollbars="vertical">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/custom_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@color/purple_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            fbutton:layout_constraintBottom_toTopOf="@+id/loker"
+            fbutton:layout_constraintEnd_toEndOf="parent"
+            fbutton:layout_constraintStart_toStartOf="parent"
+            fbutton:layout_constraintTop_toTopOf="parent"
+            fbutton:layout_constraintVertical_bias="0.762">
+
+            <Button
+                android:id="@+id/profil"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/bg_corner_button"
+                android:drawableStart="@drawable/ic_baseline_account_circle"
+                android:fontFamily="@font/poppins"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/profil"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+            <Button
+                android:id="@+id/peserta"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:background="@drawable/bg_corner_button"
+                android:drawableStart="@drawable/ic_baseline_people"
+                android:fontFamily="@font/poppins"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/peserta"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loker"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/bg_corner_button"
+            android:drawableStart="@drawable/ic_baseline_apartment"
+            android:fontFamily="@font/poppins"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_12ssp"
+            android:text="@string/lowongan_pekerjaan"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.746" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/info_terbaru_blk"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"
+            android:textSize="@dimen/_20ssp"
+            android:layout_gravity="start"
+            fbutton:drawableEndCompat="@drawable/ic_baseline_arrow_forward_ios"
+            />
+    </LinearLayout>
+
+    <com.jama.carouselview.CarouselView
+        android:id="@+id/info_blk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        fbutton:enableSnapping="false"
+        fbutton:scaleOnScroll="false"
+        fbutton:spacing="50"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_10sdp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/galeri"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins"
+            android:textSize="@dimen/_20ssp"
+            android:layout_gravity="start"
+            fbutton:drawableEndCompat="@drawable/ic_baseline_arrow_forward_ios"
+            />
+    </LinearLayout>
+
+    <com.jama.carouselview.CarouselView
+        android:id="@+id/galeri_blk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        fbutton:enableSnapping="false"
+        fbutton:scaleOnScroll="false"
+        fbutton:spacing="30"
+        />
+</LinearLayout>
+</ScrollView>

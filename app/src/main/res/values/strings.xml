@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BLK Pangkep</string>
+    <string name="imgcarousel">imgcarousel</string>
+    <string name="info_terbaru_blk">Info Terbaru BLK</string>
+    <string name="blk_pangkep">BLK Pangkep</string>
+    <string name="icon_blk">icon_blk</string>
+    <string name="profil">PROFIL</string>
+    <string name="lowongan_pekerjaan">LOWONGAN PEKERJAAN</string>
+    <string name="peserta">PESERTA</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="profil_meu">Profil</string>
+    <string name="galeri">Galeri</string>
+    <string name="peserta_meu">Peserta</string>
+    <string name="loker">Loker</string>
+    <string name="ellipsis">&#8230;</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
