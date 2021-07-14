@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:id="@+id/toolbar_container"
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<androidx.appcompat.widget.Toolbar
-    android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar_main"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@color/purple_500"
-    android:minHeight="?attr/actionBarSize"
-    app:theme="@style/Theme.BLKPangkep">
-    <ImageView
-        android:id="@+id/toolbar_icon"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="@dimen/_70sdp"
-        android:src="@drawable/logo"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:contentDescription="@string/icon_blk" />
-    <TextView
-        android:id="@+id/toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/blk_pangkep"
-        android:textSize="@dimen/_20ssp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/poppins"/>
-
-    <com.miguelcatalan.materialsearchview.MaterialSearchView
-        android:id="@+id/search_view"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</androidx.appcompat.widget.Toolbar>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple_500"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/Theme.BLKPangkep"
+        app:contentInsetStart="0dp">
+
+        <ImageView
+            android:id="@+id/toolbar_icon"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@string/icon_blk"
+            android:padding="@dimen/_2sdp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins"
+            android:text="@string/blk_pangkep"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20ssp" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </androidx.appcompat.widget.Toolbar>
 </FrameLayout>
 <!--</com.google.android.material.appbar.AppBarLayout>-->

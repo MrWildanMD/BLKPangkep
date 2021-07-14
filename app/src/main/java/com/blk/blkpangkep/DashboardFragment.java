@@ -27,7 +27,7 @@ public class DashboardFragment extends Fragment {
 
     private MaterialSearchView searchView;
     private ImageView tb_icon;
-    private TextView tb_title;
+    private TextView tb_title,tv_info, tv_galeri;
     private Button profil, peserta, loker;
 
     private int[] info_image = {R.drawable.infokan,
@@ -61,6 +61,8 @@ public class DashboardFragment extends Fragment {
         //Initialize TextView
         tb_title = (TextView) view.findViewById(R.id.toolbar_title);
         tb_title.setText("BLK Pangkep");
+        tv_info = (TextView) view.findViewById(R.id.tv_info);
+        tv_galeri = (TextView) view.findViewById(R.id.tv_galeri);
 
         //Initialie Toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar_main);
@@ -145,6 +147,20 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.action_first_fragment_to_fourth_fragment);
+            }
+        });
+
+        tv_galeri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_first_fragment_to_third_fragment);
+            }
+        });
+
+        loker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_first_fragment_to_fifth_fragment);
             }
         });
     }

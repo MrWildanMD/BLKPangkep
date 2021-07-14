@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
 //    }
 
 
-    private fun showToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
+//    private fun showToast(msg: String) {
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+//    }
 
     private fun setupSmoothBottomMenu() {
         val popupMenu = PopupMenu(this, null)
@@ -60,4 +60,11 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+    companion object {
+        init {
+            System.loadLibrary("core")
+        }
+    }
+
 }
