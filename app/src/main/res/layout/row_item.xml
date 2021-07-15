@@ -30,7 +30,7 @@
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_blk" />
+            android:src="@drawable/logo_cj" />
 
         <LinearLayout
             android:layout_width="match_parent"
