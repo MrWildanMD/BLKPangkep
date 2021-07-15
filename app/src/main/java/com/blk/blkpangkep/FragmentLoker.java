@@ -15,8 +15,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import com.blk.blkpangkep.Network.RetrofitClient;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,13 +48,13 @@ public class FragmentLoker extends Fragment {
 
     private ImageView tb_icon;
     private TextView tb_title;
+    private EditText editText;
 
     public FeedAdapter feedAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-
+        setHasOptionsMenu(false);
         return inflater.inflate(R.layout.fragment_loker, parent, false);
     }
 
@@ -72,6 +72,8 @@ public class FragmentLoker extends Fragment {
 
         //Initialize SearchView
         searchView = (MaterialSearchView) view.findViewById(R.id.search_view);
+//        editText = (EditText) searchView.findViewById(com.miguelcatalan.materialsearchview.R.id.searchTextView);
+//        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         //Initialize Shimmer
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
@@ -92,12 +94,10 @@ public class FragmentLoker extends Fragment {
         //SearchView TODO
         searchView.setVoiceSearch(false);
         searchView.setEllipsize(true);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Snackbar.make(view.findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG)
-                        .show();
-                feedAdapter.getFilter().filter(query);
                 return false;
             }
 
@@ -115,6 +115,8 @@ public class FragmentLoker extends Fragment {
                 //Do some magic
                 tb_icon.setVisibility(View.GONE);
                 tb_title.setVisibility(View.GONE);
+
+                refreshLayout.setEnabled(false);
             }
 
             @Override
@@ -123,6 +125,7 @@ public class FragmentLoker extends Fragment {
                 tb_icon.setVisibility(View.VISIBLE);
                 tb_title.setVisibility(View.VISIBLE);
 
+                refreshLayout.setEnabled(true);
             }
         });
 
@@ -133,6 +136,8 @@ public class FragmentLoker extends Fragment {
                 mShimmerViewContainer.setVisibility(View.VISIBLE);
                 loadRSS();
                 refreshLayout.setRefreshing(false);
+                setHasOptionsMenu(false);
+                getActivity().invalidateOptionsMenu();
             }
         });
 
@@ -146,6 +151,8 @@ public class FragmentLoker extends Fragment {
                if (!response.isSuccessful()) {
                    Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
                }
+               setHasOptionsMenu(true);
+               getActivity().invalidateOptionsMenu();
                 rssObject = response.body();
                 feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
