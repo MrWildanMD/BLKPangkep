@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +43,7 @@ public class FragmentLoker extends Fragment {
 
     private RecyclerView recyclerView;
     private Gson gson = new Gson();
+    private SwipeRefreshLayout refreshLayout;
     private RssObject rssObject = new RssObject();
 
     private ImageView tb_icon;
@@ -78,6 +83,8 @@ public class FragmentLoker extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+
         loadRSS();
 
         //SearchView TODO
@@ -115,6 +122,15 @@ public class FragmentLoker extends Fragment {
             }
         });
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mShimmerViewContainer.startShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.VISIBLE);
+                loadRSS();
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -122,13 +138,10 @@ public class FragmentLoker extends Fragment {
         Call<RssObject> call = RetrofitClient.getInstance().getMyApi().getRss();
         call.enqueue(new Callback<RssObject>() {
             @Override
-            public void onResponse(Call<RssObject> call, Response<RssObject> response) {
-                if (response == null) {
-                    Toast.makeText(getContext(), "Couldn't fetch the menu! Pleas try again.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-//                Toast.makeText(getContext(), "Title: "+response.body().getItems().get(0).getTitle(), Toast.LENGTH_SHORT).show();
-
+            public void onResponse(@NotNull Call<RssObject> call, @NotNull Response<RssObject> response) {
+               if (!response.isSuccessful()) {
+                   Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
+               }
                 rssObject = response.body();
                 FeedAdapter feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
@@ -139,14 +152,14 @@ public class FragmentLoker extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<RssObject> call, Throwable t) {
+            public void onFailure(@NotNull Call<RssObject> call, @NotNull Throwable t) {
                 Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);

@@ -80,7 +80,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull @NotNull FeedViewHolder holder, int position) {
 
-        Glide.with(mContext).load(rssObject.getFeed().getImage()).into(holder.itemImg);
+        Glide.with(mContext)
+                .load("http://static.careerjet.net/images/logo_top_uk.png")
+                .error(R.drawable.ic_blk)
+                .into(holder.itemImg);
         holder.tvTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.tvPub.setText(rssObject.getItems().get(position).getPubDate());
         holder.tvDescription.setText(rssObject.getItems().get(position).getDescription());
