@@ -49,6 +49,8 @@ public class FragmentLoker extends Fragment {
     private ImageView tb_icon;
     private TextView tb_title;
 
+    public FeedAdapter feedAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -95,12 +97,14 @@ public class FragmentLoker extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 Snackbar.make(view.findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG)
                         .show();
+                feedAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Do some magic
+                feedAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -143,7 +147,7 @@ public class FragmentLoker extends Fragment {
                    Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
                }
                 rssObject = response.body();
-                FeedAdapter feedAdapter = new FeedAdapter(rssObject, getContext());
+                feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
                 feedAdapter.notifyDataSetChanged();
 

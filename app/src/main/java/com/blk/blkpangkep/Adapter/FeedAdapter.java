@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,15 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blk.blkpangkep.Interface.ItemClickListener;
+import com.blk.blkpangkep.Model.Item;
 import com.blk.blkpangkep.Model.RssObject;
 import com.blk.blkpangkep.R;
 import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
 {
-
     public ImageView itemImg;
     public TextView tvTitle, tvPub, tvDescription;
     private ItemClickListener itemClickListener;
@@ -57,15 +62,19 @@ class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     }
 }
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder>{
+public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> implements Filterable {
 
     private RssObject rssObject;
     private Context mContext;
     private LayoutInflater inflater;
+    private List<Item> itemList;
+    private List<Item> itemListFull;
 
     public FeedAdapter(RssObject rssObject, Context mContext) {
         this.rssObject = rssObject;
         this.mContext = mContext;
+        itemList = rssObject.getItems();
+        itemListFull = new ArrayList<>(itemList);
         inflater = LayoutInflater.from(mContext);
     }
 
@@ -94,4 +103,39 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder>{
     public int getItemCount() {
         return rssObject.getItems().size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Item> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(itemListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Item item : itemListFull) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            itemList.clear();
+            itemList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }
