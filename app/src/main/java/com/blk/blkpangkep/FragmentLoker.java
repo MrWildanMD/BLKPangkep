@@ -19,21 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blk.blkpangkep.Adapter.FeedAdapter;
-import com.blk.blkpangkep.Interface.Api;
 import com.blk.blkpangkep.Model.RssObject;
 import com.blk.blkpangkep.Network.RetrofitClient;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class FragmentLoker extends Fragment {
@@ -42,14 +38,11 @@ public class FragmentLoker extends Fragment {
     private ShimmerFrameLayout mShimmerViewContainer;
 
     private RecyclerView recyclerView;
-    private Retrofit retrofit;
-    private Gson gson;
-    private RssObject rssObject;
+    private Gson gson = new Gson();
+    private RssObject rssObject = new RssObject();
 
     private ImageView tb_icon;
     private TextView tb_title;
-
-//    private native String URL();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -134,7 +127,9 @@ public class FragmentLoker extends Fragment {
                     Toast.makeText(getContext(), "Couldn't fetch the menu! Pleas try again.", Toast.LENGTH_LONG).show();
                     return;
                 }
-                rssObject = gson.fromJson(response.toString(), RssObject.class);
+//                Toast.makeText(getContext(), "Title: "+response.body().getItems().get(0).getTitle(), Toast.LENGTH_SHORT).show();
+
+                rssObject = response.body();
                 FeedAdapter feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
                 feedAdapter.notifyDataSetChanged();
@@ -145,7 +140,7 @@ public class FragmentLoker extends Fragment {
 
             @Override
             public void onFailure(Call<RssObject> call, Throwable t) {
-                Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

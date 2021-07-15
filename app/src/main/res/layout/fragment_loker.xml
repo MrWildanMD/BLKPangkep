@@ -43,6 +43,7 @@
     </com.facebook.shimmer.ShimmerFrameLayout>
     
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/_8sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_loker"
