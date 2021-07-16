@@ -54,7 +54,7 @@ public class FragmentLoker extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_loker, parent, false);
     }
 
@@ -98,13 +98,16 @@ public class FragmentLoker extends Fragment {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                searchView.hideKeyboard(view);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Do some magic
-                feedAdapter.getFilter().filter(newText);
+                if (feedAdapter != null){
+                    feedAdapter.getFilter().filter(newText);
+                }
                 return false;
             }
         });
@@ -136,8 +139,6 @@ public class FragmentLoker extends Fragment {
                 mShimmerViewContainer.setVisibility(View.VISIBLE);
                 loadRSS();
                 refreshLayout.setRefreshing(false);
-                setHasOptionsMenu(false);
-                getActivity().invalidateOptionsMenu();
             }
         });
 
@@ -151,8 +152,8 @@ public class FragmentLoker extends Fragment {
                if (!response.isSuccessful()) {
                    Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
                }
-               setHasOptionsMenu(true);
-               getActivity().invalidateOptionsMenu();
+//               setHasOptionsMenu(true);
+//               getActivity().invalidateOptionsMenu();
                 rssObject = response.body();
                 feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);

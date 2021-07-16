@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navController = findNavController(R.id.main_fragment)
-        setupActionBarWithNavController(this, navController)
+//        setupActionBarWithNavController(this, navController)
         setupSmoothBottomMenu()
     }
 
