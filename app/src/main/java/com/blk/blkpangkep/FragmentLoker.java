@@ -15,8 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +23,10 @@ import com.blk.blkpangkep.Adapter.FeedAdapter;
 import com.blk.blkpangkep.Model.RssObject;
 import com.blk.blkpangkep.Network.RetrofitClient;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,13 +39,11 @@ public class FragmentLoker extends Fragment {
     private ShimmerFrameLayout mShimmerViewContainer;
 
     private RecyclerView recyclerView;
-    private Gson gson = new Gson();
     private SwipeRefreshLayout refreshLayout;
     private RssObject rssObject = new RssObject();
 
     private ImageView tb_icon;
     private TextView tb_title;
-    private EditText editText;
 
     public FeedAdapter feedAdapter;
 
@@ -80,7 +75,7 @@ public class FragmentLoker extends Fragment {
 
         //Initialie Toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar_main);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
 
         //Initialize RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.list_loker);
@@ -132,14 +127,11 @@ public class FragmentLoker extends Fragment {
             }
         });
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mShimmerViewContainer.startShimmerAnimation();
-                mShimmerViewContainer.setVisibility(View.VISIBLE);
-                loadRSS();
-                refreshLayout.setRefreshing(false);
-            }
+        refreshLayout.setOnRefreshListener(() -> {
+            mShimmerViewContainer.startShimmerAnimation();
+            mShimmerViewContainer.setVisibility(View.VISIBLE);
+            loadRSS();
+            refreshLayout.setRefreshing(false);
         });
 
     }
@@ -150,11 +142,12 @@ public class FragmentLoker extends Fragment {
             @Override
             public void onResponse(@NotNull Call<RssObject> call, @NotNull Response<RssObject> response) {
                if (!response.isSuccessful()) {
-                   Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
+                   Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_LONG).show();
                }
 //               setHasOptionsMenu(true);
 //               getActivity().invalidateOptionsMenu();
                 rssObject = response.body();
+                assert rssObject != null;
                 feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
                 feedAdapter.notifyDataSetChanged();
@@ -165,7 +158,7 @@ public class FragmentLoker extends Fragment {
 
             @Override
             public void onFailure(@NotNull Call<RssObject> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
