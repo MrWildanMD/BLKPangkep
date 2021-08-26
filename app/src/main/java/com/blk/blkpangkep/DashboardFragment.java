@@ -30,6 +30,8 @@ import com.jama.carouselview.CarouselViewListener;
 import com.jama.carouselview.enums.OffsetType;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import org.jetbrains.annotations.NotNull;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +48,7 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_dashboard, parent, false);
     }
 
@@ -166,6 +169,24 @@ public class DashboardFragment extends Fragment {
                 requireContext().startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_registrasi, menu);
+        MenuItem item = menu.findItem(R.id.action_registrasi);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_registrasi:
+                        Navigation.findNavController(requireView()).navigate(R.id.action_first_fragment_to_sixth_fragment);
+                        return true;
+                }
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
 }

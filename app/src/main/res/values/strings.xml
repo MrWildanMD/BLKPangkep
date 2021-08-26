@@ -51,4 +51,26 @@ Morbi sodales finibus justo, quis hendrerit turpis commodo non. In convallis ant
 
 › Pemasaran Program fasilitas hasil produksi jasa dan hasil pelatihan serta pemberian layanan informasi pelatihan</string>
     <string name="rss_error">RSS ERROR!</string>
+    <string name="registrasi">Registrasi</string>
+
+
+    <string-array name="jenis_kelamin">
+        <item>Laki-Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
+    <string-array name="kejuruan">
+        <item>Teknik Elektronika</item>
+        <item>Teknik Otomotif</item>
+        <item>Teknologi Informasi dan Komunikasi</item>
+        <item>Teknik Listrik dan Refrigeration</item>
+        <item>Teknik Las</item>
+        <item>Tata Kecantikan</item>
+        <item>Bangunan</item>
+        <item>Garmen Apparel</item>
+        <item>Processing</item>
+        <item>Industri Kreatif</item>
+        <item>Pertanian</item>
+    </string-array>
+
 </resources>

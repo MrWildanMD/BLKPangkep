@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_first_fragment_to_third_fragment"
             app:destination="@id/third_fragment" />
+        <action
+            android:id="@+id/action_first_fragment_to_sixth_fragment"
+            app:destination="@id/sixth_fragment" />
     </fragment>
     <fragment
         android:id="@+id/second_fragment"
@@ -55,5 +58,14 @@
         android:name="com.blk.blkpangkep.FragmentLoker"
         android:label="Loker"
         tools:layout="@layout/fragment_loker"/>
+    <fragment
+        android:id="@+id/sixth_fragment"
+        android:name="com.blk.blkpangkep.FragmentRegistrasi"
+        android:label="Registrasi"
+        tools:layout="@layout/fragment_registrasi">
+        <action
+            android:id="@+id/action_sixth_fragment_to_first_fragment"
+            app:destination="@id/first_fragment" />
+    </fragment>
 
 </navigation>
