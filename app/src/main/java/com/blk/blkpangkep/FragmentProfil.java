@@ -1,9 +1,15 @@
 package com.blk.blkpangkep;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ceylonlabs.imageviewpopup.ImagePopup;
 import com.google.android.material.snackbar.Snackbar;
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
@@ -26,10 +33,11 @@ public class FragmentProfil extends Fragment {
     private MaterialSearchView searchView;
     private ImageView tb_icon;
     private TextView tb_title;
+    private CardView profil,visimisi,tugas,struktur;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
 //        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         return inflater.inflate(R.layout.fragment_profil, parent, false);
     }
@@ -39,6 +47,7 @@ public class FragmentProfil extends Fragment {
     // bisa juga didalam onCreateView)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        dialog = new Dialog(getContext());
         //Initialize ImageView
         tb_icon = (ImageView) view.findViewById(R.id.toolbar_icon);
 
@@ -51,49 +60,63 @@ public class FragmentProfil extends Fragment {
 
         //Initialie Toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar_main);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        //SearchView TODO
-        searchView.setVoiceSearch(false);
-        searchView.setEllipsize(true);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Snackbar.make(view.findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG)
-                        .show();
-                return false;
-            }
+        //Initialize Cardview
+        profil = view.findViewById(R.id.profil);
+        visimisi = view.findViewById(R.id.visimisi);
+        tugas = view.findViewById(R.id.tugas);
+        struktur = view.findViewById(R.id.struktur);
 
+        //ImagePop
+        final ImagePopup imagePopup = new ImagePopup(getContext());
+        imagePopup.setImageOnClickClose(true);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imgStruktur);
+        imagePopup.initiatePopup(imageView.getDrawable());
+
+        profil.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                //Do some magic
-                return false;
+            public void onClick(View v) {
+                showDialog(R.string.profil_text, R.drawable.profil);
             }
         });
 
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+        visimisi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSearchViewShown() {
-                //Do some magic
-                tb_icon.setVisibility(View.GONE);
-                tb_title.setVisibility(View.GONE);
+            public void onClick(View v) {
+                showDialog(R.string.visi_misi, R.drawable.visimisi);
             }
+        });
 
+        tugas.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSearchViewClosed() {
-                //Do some magic
-                tb_icon.setVisibility(View.VISIBLE);
-                tb_title.setVisibility(View.VISIBLE);
+            public void onClick(View v) {
+                showDialog(R.string.tugas_pokok, R.drawable.tugas);
+            }
+        });
 
+        struktur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePopup.viewPopup();
             }
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-        super.onCreateOptionsMenu(menu,inflater);
+    private void showDialog(int text, int banner) {
+        dialog.setContentView(R.layout.profil_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ImageView bannerImg = dialog.findViewById(R.id.bannerDialog);
+        TextView textContent = dialog.findViewById(R.id.textContent);
+        ImageView close = dialog.findViewById(R.id.close);
+        bannerImg.setImageDrawable(ContextCompat.getDrawable(getContext(), banner));
+        textContent.setText(text);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }

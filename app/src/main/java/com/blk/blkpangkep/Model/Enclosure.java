@@ -1,4 +1,7 @@
 package com.blk.blkpangkep.Model;
 
-public class Enclosure {
+import java.io.Serializable;
+
+public class Enclosure
+{
 }

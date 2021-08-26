@@ -1,6 +1,8 @@
 package com.blk.blkpangkep.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blk.blkpangkep.Interface.ItemClickListener;
@@ -23,11 +26,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
+class FeedViewHolder extends RecyclerView.ViewHolder
 {
     public ImageView itemImg;
     public TextView tvTitle, tvPub, tvDescription;
     private ItemClickListener itemClickListener;
+    public CardView cardItem;
 
     public FeedViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
@@ -37,28 +41,11 @@ class FeedViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         tvTitle = (TextView) itemView.findViewById(R.id.item_title);
         tvPub = (TextView) itemView.findViewById(R.id.item_published);
         tvDescription = (TextView) itemView.findViewById(R.id.item_dexcription);
-
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
+        cardItem = (CardView) itemView.findViewById(R.id.card_item);
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        itemClickListener.onClick(v, getAdapterPosition(), false);
-
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-
-        itemClickListener.onClick(v, getAdapterPosition(), true);
-
-        return true;
     }
 }
 
@@ -90,13 +77,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedViewHolder> implements
     public void onBindViewHolder(@NonNull @NotNull FeedViewHolder holder, int position) {
 
 //        Glide.with(mContext)
-//                .load("http://static.careerjet.net/images/logo_top_uk.png")
+//                .load()
 //                .error(R.drawable.ic_blk)
 //                .into(holder.itemImg);
         holder.tvTitle.setText(rssObject.getItems().get(position).getTitle());
         holder.tvPub.setText(rssObject.getItems().get(position).getPubDate());
         holder.tvDescription.setText(rssObject.getItems().get(position).getDescription());
-
+        holder.cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getAdapterPosition();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(rssObject.getItems().get(pos).getLink()));
+                mContext.startActivity(i);
+            }
+        });
     }
 
     @Override

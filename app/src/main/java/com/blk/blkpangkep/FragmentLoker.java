@@ -127,11 +127,20 @@ public class FragmentLoker extends Fragment {
             }
         });
 
-        refreshLayout.setOnRefreshListener(() -> {
-            mShimmerViewContainer.startShimmerAnimation();
-            mShimmerViewContainer.setVisibility(View.VISIBLE);
-            loadRSS();
-            refreshLayout.setRefreshing(false);
+//        refreshLayout.setOnRefreshListener(() -> {
+//            mShimmerViewContainer.startShimmerAnimation();
+//            mShimmerViewContainer.setVisibility(View.VISIBLE);
+//            loadRSS();
+//            refreshLayout.setRefreshing(false);
+//        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mShimmerViewContainer.startShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.VISIBLE);
+                loadRSS();
+                refreshLayout.setRefreshing(false);
+            }
         });
 
     }
@@ -144,10 +153,7 @@ public class FragmentLoker extends Fragment {
                if (!response.isSuccessful()) {
                    Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_LONG).show();
                }
-//               setHasOptionsMenu(true);
-//               getActivity().invalidateOptionsMenu();
                 rssObject = response.body();
-                assert rssObject != null;
                 feedAdapter = new FeedAdapter(rssObject, getContext());
                 recyclerView.setAdapter(feedAdapter);
                 feedAdapter.notifyDataSetChanged();

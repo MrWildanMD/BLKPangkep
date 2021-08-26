@@ -1,5 +1,7 @@
 package com.blk.blkpangkep;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +18,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.blk.blkpangkep.Adapter.GaleriAdapter;
+import com.blk.blkpangkep.Model.Youtube.Galeri;
+import com.blk.blkpangkep.Network.RetrofitClientThree;
+import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
 import com.jama.carouselview.enums.OffsetType;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DashboardFragment extends Fragment {
 
@@ -29,19 +40,12 @@ public class DashboardFragment extends Fragment {
     private ImageView tb_icon;
     private TextView tb_title,tv_info, tv_galeri;
     private Button profil, peserta, loker;
+    private Galeri galeri = new Galeri();
 
-    private int[] info_image = {R.drawable.infokan,
-            R.drawable.infokan, R.drawable.infokan};
-
-    private int[] galeri_image = {R.drawable.infokan,
-            R.drawable.infokan, R.drawable.infokan,
-            R.drawable.infokan, R.drawable.infokan,
-            R.drawable.infokan, R.drawable.infokan,
-            R.drawable.infokan};
+    private int[] info_image = {R.drawable.infokan};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_dashboard, parent, false);
     }
 
@@ -82,57 +86,47 @@ public class DashboardFragment extends Fragment {
             public void onBindView(View view, int position) {
                 ImageView imageView = view.findViewById(R.id.imageView_info);
                 imageView.setImageDrawable(getResources().getDrawable(info_image[position]));
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("https://www.simpulrakyat.co.id/2021/06/blk-pangkep-cetak-tenaga-kerja-terampil-dan-kompetitif.html"));
+                        requireContext().startActivity(i);
+                    }
+                });
             }
         });
         info_blk.show();
 
-        galeri_blk.setSize(galeri_image.length);
-        galeri_blk.setResource(R.layout.galeri_blk_carousel);
-        galeri_blk.hideIndicator(true);
-        galeri_blk.setCarouselOffset(OffsetType.START);
-        galeri_blk.setCarouselViewListener(new CarouselViewListener() {
+        Call<Galeri> call = RetrofitClientThree.getInstance().getMyApi().getGaleri();
+        call.enqueue(new Callback<Galeri>() {
             @Override
-            public void onBindView(View view, int position) {
-                ImageView imageView = view.findViewById(R.id.imageView_galeri);
-                imageView.setImageDrawable(getResources().getDrawable(galeri_image[position]));
-            }
-        });
-        galeri_blk.show();
-
-        //Initialize SearchView
-        searchView = (MaterialSearchView) view.findViewById(R.id.search_view);
-
-        //SearchView TODO
-        searchView.setVoiceSearch(false);
-        searchView.setEllipsize(true);
-        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Snackbar.make(view.findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG)
-                        .show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //Do some magic
-                return false;
-            }
-        });
-
-        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
-            @Override
-            public void onSearchViewShown() {
-                //Do some magic
-                tb_icon.setVisibility(View.GONE);
-                tb_title.setVisibility(View.GONE);
+            public void onResponse(Call<Galeri> call, Response<Galeri> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Error: "+response.errorBody(), Toast.LENGTH_SHORT).show();
+                }
+                galeri = response.body();
+                galeri_blk.setSize(galeri.getItems().size());
+                galeri_blk.setResource(R.layout.galeri_blk_carousel);
+                galeri_blk.hideIndicator(true);
+                galeri_blk.setCarouselOffset(OffsetType.START);
+                galeri_blk.setCarouselViewListener(new CarouselViewListener() {
+                    @Override
+                    public void onBindView(View view, int position) {
+                        ImageView imageView = view.findViewById(R.id.imageView_galeri);
+                        Glide.with(requireContext())
+                                .load(Uri.parse(galeri.getItems().get(position).getSnippet().getThumbnails().getHigh().getUrl()))
+                                .error(R.drawable.ic_blk)
+                                .placeholder(R.drawable.ic_blk)
+                                .into(imageView);
+                    }
+                });
+                galeri_blk.show();
             }
 
             @Override
-            public void onSearchViewClosed() {
-                //Do some magic
-                tb_icon.setVisibility(View.VISIBLE);
-                tb_title.setVisibility(View.VISIBLE);
+            public void onFailure(Call<Galeri> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: "+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -163,13 +157,15 @@ public class DashboardFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_first_fragment_to_fifth_fragment);
             }
         });
+
+        tv_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://www.simpulrakyat.co.id/"));
+                requireContext().startActivity(i);
+            }
+        });
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        searchView.setMenuItem(item);
-        super.onCreateOptionsMenu(menu,inflater);
-    }
 }

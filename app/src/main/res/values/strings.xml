@@ -13,8 +13,42 @@
     <string name="peserta_meu">Peserta</string>
     <string name="loker">Loker</string>
     <string name="ellipsis">&#8230;</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logo_blk_pangkep">Logo BLK Pangkep</string>
     <string name="cari_disini">Cari disini</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum eu dolor non tincidunt. Nullam et leo malesuada, posuere est eget, porttitor nibh. Sed quis posuere ex. Nam eleifend elit eros, quis ullamcorper libero viverra nec. Vivamus luctus dolor justo. Aliquam hendrerit semper lorem, id bibendum nulla egestas a. Proin sit amet eros feugiat, scelerisque neque eu, vestibulum eros. Ut aliquet, metus eu interdum dignissim, sem massa pharetra libero, et finibus quam massa nec lectus. Cras rhoncus lorem nec enim pharetra auctor. Nulla id dui purus. Sed egestas gravida ante, at posuere enim. Aliquam non accumsan ipsum.
+
+Suspendisse quis nunc sem. Ut metus nisi, accumsan eget dictum vitae, vestibulum ut ante. Proin vehicula lorem sed massa scelerisque varius. Donec facilisis sem sagittis ante pretium, et tincidunt felis lobortis. Curabitur gravida nulla id velit facilisis, vel tincidunt neque dignissim. Praesent dapibus sem quis posuere tristique. Vivamus dictum scelerisque dignissim. Donec posuere libero nulla, ac sagittis nisl faucibus ac. Proin placerat in dui sit amet varius. Quisque consectetur mollis varius. Praesent placerat nibh elit, at tincidunt orci imperdiet vel.
+
+Mauris mollis felis sed ligula finibus gravida lobortis sed orci. In vel leo id leo posuere dapibus a eget odio. Suspendisse eros ipsum, tempor vitae ipsum quis, interdum lacinia metus. Morbi sit amet dolor maximus, auctor tellus ac, molestie purus. Curabitur quis libero at nibh euismod placerat. In id congue turpis. Mauris mattis tincidunt urna ut dapibus. Sed in elit eget quam imperdiet semper rutrum ac sapien. Curabitur efficitur est diam, ac vestibulum tellus congue eu. Integer ornare diam nec tristique malesuada. In hac habitasse platea dictumst.
+
+Morbi sodales finibus justo, quis hendrerit turpis commodo non. In convallis ante a lorem vehicula finibus. Suspendisse fringilla quam in tincidunt eleifend. Phasellus scelerisque massa ac nulla ultrices, dignissim gravida neque rutrum. Pellentesque tincidunt mollis nunc. Vestibulum fermentum, leo quis rhoncus facilisis, tellus eros posuere elit, sed finibus lorem ante rutrum lorem. Maecenas eu porta lacus, eu elementum augue. Ut ut vestibulum ex. In ac leo pulvinar, hendrerit diam eu, fermentum orci. In id augue rutrum, efficitur leo sit amet, commodo eros. Fusce sodales elit varius elit aliquet, ac fermentum metus laoreet. Proin maximus ultricies erat pellentesque vehicula. Mauris elementum sit amet sem et interdum. Donec facilisis massa sed mauris congue viverra. Fusce venenatis quam convallis dignissim laoreet. Pellentesque molestie mauris sed eros molestie, sed consectetur diam hendrerit.</string>
+
+<!--  TODO: Update String Content  -->
+
+    <string name="profil_text">Balai Latihan Kerja (BLK) Kab. Pangkep dibangun berdasarkan peraturan Bupati No. 10 tahun 2006, Peraturan No.45 Tahun 2008 dan perubahan Peraturan Bupati Nomor 75 Tahun 2017 tentang Organisasi dan Tata Kerja Unit Pelaksana Teknis (UPT) Balai Latihan Kerja Dinas Ketenagakerjaan Kab. Pangkep merupakan salah satu Program Pemerintah Kab. Pangkep yang bertujuan untuk meningkatkan kualitas dan produktivitas masyarakat dalam rangka mengatasi pengangguran dan kemiskinan. Balai Latihan Kerja adalah tempat diselenggarakannya proses pelatihan keterampilan bagi peserta pelatihan sehingga mampu dan menguasai suatu jenis tingkat kompetensi dalam memasuki pasar kerja atau usaha mandiri.</string>
+    <string name="visi_misi">Visi:
+        “Terwujudnya tenaga kerja yang terampil, kompeten dan produktif melalui pelatihan kerja dan pemagangan”
+    Misi:
+    1.Peningkatan peranan lembaga teknis UPT dalam menciptakan keterampilan, kompetensi dan produktivitas tenaga kerja.
+
+2.Melaksanakan dan mengembangkan pelatihan kerja secara sistematik dan komprehensif.
+
+3.Tempat uji kompetensi nasional.
+
+4.Mengembangkan sistem untuk kebutuhan program pemagangan dalam dan luar negeri.
+
+5.Mengembangkan program Production Training.
+
+6.Melaksanakan kerjasama terhadap lembaga usaha dan lembaga pendidikan teknis.</string>
+    <string name="tugas_pokok">Balai Latihan Kerja Kab. Pangkep mempunyai tugas melaksanakan pelatihan tenaga kerja di bidang industri dan usaha kecil menengah. Untuk melaksanakan tugas tersebut Balai Latihan Kerja mempunyai fungsi Program dan kerja sama pelatihan :
+
+› Penyusunan Rencana
+
+› Pelaksanaan Pelatihan Tenaga Kerja dan Keterampilan
+
+› Pemasaran Program fasilitas hasil produksi jasa dan hasil pelatihan serta pemberian layanan informasi pelatihan</string>
+    <string name="rss_error">RSS ERROR!</string>
 </resources>
