@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -41,14 +42,13 @@ public class DashboardFragment extends Fragment {
     private MaterialSearchView searchView;
     private ImageView tb_icon;
     private TextView tb_title,tv_info, tv_galeri;
-    private Button profil, peserta, loker;
+    private Button profil, peserta, loker, registrasi;
     private Galeri galeri = new Galeri();
 
     private int[] info_image = {R.drawable.infokan};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_dashboard, parent, false);
     }
 
@@ -56,11 +56,12 @@ public class DashboardFragment extends Fragment {
     // Semua pembacaan view dan penambahan listener dilakukan disini (atau 			
     // bisa juga didalam onCreateView)
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         //Initialize Button
         profil = (Button) view.findViewById(R.id.profil);
         peserta = (Button) view.findViewById(R.id.peserta);
         loker = (Button) view.findViewById(R.id.loker);
+        registrasi = (Button) view.findViewById(R.id.registrasi);
 
         //Initialize ImageView
         tb_icon = (ImageView) view.findViewById(R.id.toolbar_icon);
@@ -169,24 +170,14 @@ public class DashboardFragment extends Fragment {
                 requireContext().startActivity(i);
             }
         });
-    }
 
-    @Override
-    public void onCreateOptionsMenu(@NotNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_registrasi, menu);
-        MenuItem item = menu.findItem(R.id.action_registrasi);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        registrasi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_registrasi:
-                        Navigation.findNavController(requireView()).navigate(R.id.action_first_fragment_to_sixth_fragment);
-                        return true;
-                }
-                return false;
+            public void onClick(View v) {
+                Intent i = new Intent(requireContext(), RegisterActivity.class);
+                requireContext().startActivity(i);
             }
         });
-        super.onCreateOptionsMenu(menu,inflater);
     }
 
 }
