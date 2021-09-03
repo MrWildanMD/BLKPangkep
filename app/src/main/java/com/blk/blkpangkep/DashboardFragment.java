@@ -1,19 +1,22 @@
 package com.blk.blkpangkep;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,17 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blk.blkpangkep.Adapter.GaleriAdapter;
 import com.blk.blkpangkep.Model.Youtube.Galeri;
 import com.blk.blkpangkep.Network.RetrofitClientThree;
 import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
 import com.jama.carouselview.CarouselView;
 import com.jama.carouselview.CarouselViewListener;
 import com.jama.carouselview.enums.OffsetType;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +43,7 @@ public class DashboardFragment extends Fragment {
     private TextView tb_title,tv_info, tv_galeri;
     private Button profil, peserta, loker, registrasi;
     private Galeri galeri = new Galeri();
+    private Dialog dialog;
 
     private int[] info_image = {R.drawable.infokan};
 
@@ -57,6 +57,7 @@ public class DashboardFragment extends Fragment {
     // bisa juga didalam onCreateView)
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        dialog = new Dialog(getContext());
         //Initialize Button
         profil = (Button) view.findViewById(R.id.profil);
         peserta = (Button) view.findViewById(R.id.peserta);
@@ -174,10 +175,57 @@ public class DashboardFragment extends Fragment {
         registrasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showDialog();
+            }
+        });
+
+        requireActivity()
+                .getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+                        builder.setTitle("Konfirmasi");
+                        builder.setMessage("Apakah anda ingin keluar dari aplikasi?");
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getActivity().finish();
+                            }
+                        });
+                        alertDialog.show();
+                    }
+                });
+    }
+
+    private void showDialog() {
+        dialog.setContentView(R.layout.option_dialog);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button bt1 = dialog.findViewById(R.id.bt1);
+        Button bt2 = dialog.findViewById(R.id.bt2);
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent i = new Intent(requireContext(), RegisterActivity.class);
                 requireContext().startActivity(i);
             }
         });
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(requireContext(), RegisterKemnaker.class);
+                requireContext().startActivity(i);
+            }
+        });
+        dialog.show();
     }
 
 }

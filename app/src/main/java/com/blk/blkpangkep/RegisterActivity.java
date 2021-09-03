@@ -1,17 +1,27 @@
 package com.blk.blkpangkep;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.dhaval2404.imagepicker.ImagePicker;
+
+import java.io.File;
 
 import co.nedim.maildroidx.MaildroidX;
 import co.nedim.maildroidx.MaildroidXType;
@@ -22,6 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Spinner jenis_kelamin,kejuruan;
     private Button submit;
     private EditText nama, nik, tl, nohp, email;
+    private ImageView foto;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity {
         nohp = (EditText) findViewById(R.id.edit_nohp);
         email = (EditText) findViewById(R.id.edit_email);
 
+        //Initialize ImageView
+        foto = (ImageView) findViewById(R.id.foto_register);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
                 if (nama.getText().length() == 0) {
                     Toast.makeText(RegisterActivity.this, "Nama Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
                 }
+                if (foto.getDrawable() == AppCompatResources.getDrawable(RegisterActivity.this, R.drawable.add_image)) {
+                    Toast.makeText(RegisterActivity.this, "Foto Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                }
                 new MaildroidX.Builder()
                         .smtp("smtp.gmail.com")
                         .smtpUsername("Blkhebat@gmail.com")
@@ -76,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .to(email.getText().toString().trim())
                         .from("Blkhebat@gmail.com")
                         .subject("Registrasi")
+                        .attachment(uri.getPath())
                         .body("Data Pendaftaran Anda \n Nama: "+nama.getText().toString().trim()
                                 +"\n NIK: "+nik.getText().toString().trim()
                                 +"\n Tanggal Lahir: "+tl.getText().toString().trim()
@@ -110,6 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
                         .to("Blkhebat@gmail.com")
                         .from("Blkhebat@gmail.com")
                         .subject("Registrasi")
+                        .attachment(uri.getPath())
                         .body("Data Pendaftaran Anda \n Nama: "+nama.getText().toString().trim()
                                 +"<br> NIK: "+nik.getText().toString().trim()
                                 +"<br> Tanggal Lahir: "+tl.getText().toString().trim()
@@ -137,5 +157,30 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(RegisterActivity.this)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(1000, 1000)
+                        .start();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            uri = data.getData();
+
+            foto.setImageURI(uri);
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Dibatalkan", Toast.LENGTH_SHORT).show();
+        }
     }
 }

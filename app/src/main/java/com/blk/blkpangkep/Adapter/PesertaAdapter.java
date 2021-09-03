@@ -75,7 +75,7 @@ public class PesertaAdapter extends RecyclerView.Adapter<PesertaViewHolder> impl
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (int i = 0; i < dataList.size(); i++) {
-                    if (dataListFull.get(i).get(1).toLowerCase().contains(filterPattern)) {
+                    if (dataListFull.get(i).get(1).toLowerCase().contains(filterPattern) || dataListFull.get(i).get(5).toLowerCase().contains(filterPattern)) {
                         filteredList.add(dataListFull.get(i));
                     }
                 }

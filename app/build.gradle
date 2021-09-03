@@ -4,8 +4,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
 
     externalNativeBuild {
         cmake {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId "com.blk.blkpangkep"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.2'
     implementation 'com.github.nedimf:maildroid:v0.0.8-release'
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+//    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
 
 
     //Test Implementation Library

@@ -213,6 +213,32 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Foto:"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16ssp"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/foto_register"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/add_image"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <Button
