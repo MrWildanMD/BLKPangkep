@@ -71,7 +71,6 @@ dependencies {
     implementation 'com.github.chathuralakmal:AndroidImagePopup:1.2.2'
     implementation 'com.github.nedimf:maildroid:v0.0.8-release'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-//    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
 
 
     //Test Implementation Library
